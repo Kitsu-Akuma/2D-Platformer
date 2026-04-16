@@ -19,6 +19,6 @@ public class spike : MonoBehaviour
     {
         //Debug.Log("Trigger Enter");
         //Destroy(collision.gameObject);
-        collision.GetComponent<Health>().AddDamage(damage);
+        collision.GetComponent<Health>().ReceiveDamage(damage);
     }
 }

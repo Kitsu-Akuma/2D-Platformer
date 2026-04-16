@@ -1,34 +1,46 @@
+using JetBrains.Annotations;
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float maxhealth = 10;
-    private float health = 10;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    public int maxHealth = 100;
+    private float currentHealth;
+    private bool invicibility;
 
+    public delegate void OnHealthChangeHandler(float newHealth, float amountChanged);
+    public event OnHealthChangeHandler OnHealthChanged;
+
+    public delegate void OnHealthInitializedHandler(float newHealth);
+    public event OnHealthInitializedHandler OnHealthInitialized;
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+        OnHealthInitialized?.Invoke(currentHealth);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReceiveDamage(float amount)
     {
-
-    }
-
-    public void AddDamage(float damage)
-    {
-        health -= damage;
-        Debug.Log(health);
-        if (health <= 0)
+        if (!invicibility)
         {
-            Destroy(this.gameObject);
+            currentHealth -= amount;
+            OnHealthChanged?.Invoke(currentHealth, amount);
+            invicibility = true;
         }
     }
 
-    public void AddHealing(float healing)
+    IEnumerator ResetInvicibility(float resetTime);
     {
-        health += healing;
-        Debug.Log(health);
+    yield return new WaitForSeconds(resetTime);
+    Debug.Log("Reset");
+    }
+
+    public void AddHealth(float amount)
+    {
+        currentHealth += amount;
+        OnHealthChanged?.Invoke(currentHealth, amount);
+        //Debug.Log(currentHealth);
     }
 }

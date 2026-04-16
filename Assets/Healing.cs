@@ -18,7 +18,7 @@ public class Healing : MonoBehaviour
     {
         //Debug.Log("Trigger Enter");
         //Destroy(collision.gameObject);
-        collision.GetComponent<Health>().AddHealing(healing);
+        collision.GetComponent<Health>().AddHealth(healing);
         Destroy(gameObject);
     }
 }
