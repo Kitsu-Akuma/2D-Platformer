@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -31,7 +29,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    IEnumerator ResetInvicibility(float resetTime);
+    private IEnumerator ResetInvicibility(float resetTime)
     {
     yield return new WaitForSeconds(resetTime);
     Debug.Log("Reset");
