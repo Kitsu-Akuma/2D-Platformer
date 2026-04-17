@@ -26,19 +26,20 @@ public class Health : MonoBehaviour
             currentHealth -= amount;
             OnHealthChanged?.Invoke(currentHealth, amount);
             invicibility = true;
+            StartCoroutine(ResetInvicibility());
         }
     }
 
-    private IEnumerator ResetInvicibility(float resetTime)
+    private IEnumerator ResetInvicibility(float resetTime = 2f)
     {
-    yield return new WaitForSeconds(resetTime);
-    Debug.Log("Reset");
+        yield return new WaitForSeconds(resetTime);
+        invicibility = false;
+        Debug.Log("Reset");
     }
 
     public void AddHealth(float amount)
     {
         currentHealth += amount;
         OnHealthChanged?.Invoke(currentHealth, amount);
-        //Debug.Log(currentHealth);
     }
 }
