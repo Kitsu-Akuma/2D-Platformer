@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -36,7 +38,12 @@ public class Health : MonoBehaviour
             OnHealthChanged?.Invoke(currentHealth, -amount);
 
             invincibility = true;
-            StartCoroutine(InvincibilityFade(2f));
+            StartCoroutine(InvincibilityFade(2f));   
+            if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+                SceneManager.LoadScene("Game Over");
+        }
         }
     }
 
@@ -87,5 +94,12 @@ public class Health : MonoBehaviour
         {
             OnHealthChanged?.Invoke(currentHealth, realAmount);
         }
+     
+    }
+
+    internal int GetCurrentHealth()
+    {
+        throw new NotImplementedException();
+        return (int)currentHealth;
     }
 }

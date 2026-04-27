@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class spike : MonoBehaviour
 {
-    public float damage = 1;
+    public float damage = 15;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
