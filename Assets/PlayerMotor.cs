@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMotor : MonoBehaviour
 {
     Vector2 direction;
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
     public float speed = 10;
     public float jump = 10;
     public float maxspeed = 5;
@@ -13,55 +15,84 @@ public class PlayerMotor : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
+        HandleKeyboardInput();
         HandlePlayerXMovement();
-        MaxSpeedLimiting();
+    }
+
+    private void HandleKeyboardInput()
+    {
+        Keyboard keyboard = Keyboard.current;
+
+        if (keyboard == null)
+        {
+            return;
+        }
+
+        direction.x = 0;
+
+        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)
+        {
+            direction.x -= 1;
+        }
+
+        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed)
+        {
+            direction.x += 1;
+        }
+
+        if (keyboard.spaceKey.isPressed || keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)
+        {
+            Jump();
+        }
     }
 
     private void HandlePlayerXMovement()
     {
-        if (direction.x != 0)
-        {
-            rigidbody2D.AddForce(new Vector2(direction.x * speed, 0));
-        }
-        else if (rigidbody2D.linearVelocity.x != 0)
-        {
-            rigidbody2D.AddForce(new Vector2(-rigidbody2D.linearVelocityX * stoppingForce, 0));
-        }
-    }
-
-    private void MaxSpeedLimiting()
+        float horizontalSpeed = direction.x * maxspeed;
+        rb.linearVelocity = new Vector2(horizontalSpeed, rb.linearVelocity.y);
+        if (direction.x < 0)
     {
-        if (rigidbody2D.linearVelocityX >= maxspeed)
+        spriteRenderer.flipX = true;
+    }
+        else if (direction.x > 0)
         {
-            rigidbody2D.linearVelocityX = maxspeed;
-        }
-        else if (rigidbody2D.linearVelocityX <= -maxspeed)
-        {
-            rigidbody2D.linearVelocityX = -maxspeed;
+            spriteRenderer.flipX = false;
         }
     }
 
-    private void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
         //Debug.Log("Moving");
         //Debug.Log(value.Get<Vector2>());
         direction = value.Get<Vector2>();
 
     }
-    private void OnJump()
+    public void OnJump(InputValue value)
     {
-        if (canJump)
+        if (value.isPressed)
         {
-            rigidbody2D.AddForce(Vector2.up * jump, ForceMode2D.Impulse);
-            canJump = false;
+            Jump();
         }
     }
+
+    private void Jump()
+    {
+        if (!canJump)
+        {
+            return;
+        }
+
+        rb.AddForce(Vector2.up * jump, ForceMode2D.Impulse);
+        canJump = false;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canJump = true;
