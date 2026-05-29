@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8184660559226999119}
   - component: {fileID: 3311679515585973446}
   m_Layer: 0
-  m_Name: Isometric Diamond (1)
+  m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7179470774781157735}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.7069838, w: 0.70722973}
-  m_LocalPosition: {x: 130, y: 76, z: 171.71}
-  m_LocalScale: {x: 23.1855, y: 24.518, z: 21.32}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.1380982, y: -23.64264, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -160,4 +160,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb51ac9686b1de44a95e62f4aeca5321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Coin: 1
+  coinValue: 1
