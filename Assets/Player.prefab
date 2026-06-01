@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 1068047112931331149}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   dashDuration: 0.15
   dashCooldown: 0.5
   stoppingForce: 50
+  animator: {fileID: 5388665211987753752}
 --- !u!50 &3002675163689326516
 Rigidbody2D:
   serializedVersion: 5

@@ -15,6 +15,7 @@ public class PlayerMotor : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 0.5f;
     public float stoppingForce = 5;
+    public Animator animator;
 
     private int jumpsRemaining;
     private float facingDirection = 1;
@@ -23,6 +24,7 @@ public class PlayerMotor : MonoBehaviour
     private float dashTimer;
     private float dashCooldownTimer;
     private int lastJumpFrame = -1;
+    private bool isRunning = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -96,6 +98,7 @@ public class PlayerMotor : MonoBehaviour
             spriteRenderer.flipX = false;
             facingDirection = 1;
         }
+        animator.SetBool("IsRunning", direction.x != 0);
     }
 
     public void OnMove(InputValue value)
@@ -103,7 +106,6 @@ public class PlayerMotor : MonoBehaviour
         //Debug.Log("Moving");
         //Debug.Log(value.Get<Vector2>());
         direction = value.Get<Vector2>();
-
     }
     public void OnJump(InputValue value)
     {
